@@ -1,0 +1,12 @@
+#our deps
+
+openai
+beautifulsoup4
+requests
+
+#and then we can install them using pip install -r requirements.txt
+
+#openai keys not included.  You will need to get your own.  They are free.
+
+
+
