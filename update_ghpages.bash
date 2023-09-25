@@ -1,27 +1,47 @@
 #!/bin/bash
 
-# Step 1: Checkout main branch
-git checkout main
-git pull origin main
+#this script will nuke docs/ and rebuild it with an index of `find -iname *.md` as a root wiki liked page and all other .md files as subpages
 
-# Step 2: Generate index.md
-echo "# Wiki Index" > index.md
-echo "" >> index.md
-find . -iname "*.md" | sed -e 's/^\.\///' -e 's/\(.*\)\.md/- [\1](\1\.md)/' >> index.md
+rm -fr docs
+mkdir docs
+touch docs/index.md
+echo "# Index of all .md files in this repo" >> docs/index.md
+echo "" >> docs/index.md
 
-# Step 3: Commit changes to main
-git add index.md
-git commit -m "Automatically generated index.md"
-git push origin main
+#the files have spaces in the names
 
-# Step 4: Checkout docs branch and clean
-git checkout docs
-git rm -r *
+files=()
+while IFS=  read -r -d $'\0'; do
+    files+=("$REPLY")
+done < <(find . -iname '*.md' -print0)
 
-# Step 5: Copy contents from main
-git checkout main -- .
-git add .
-git commit -m "Updated docs branch with main branch contents"
+#perform mkdir on all the files to create the directory structure
+for file in "${files[@]}"; do
+    #echo "$file"
+    #echo "${file%/*}"
+    mkdir -p docs/"${file%/*}"
+done
 
-# Step 6: Push changes to GitHub
-git push origin docs
+#copy all the files to the docs directory
+for file in "${files[@]}"; do
+    cp "$file" docs/"$file"
+done
+
+#now we need to create the index.md file
+
+#first we need to remove the ./ from the front of the files
+for file in "${files[@]}"; do
+    #echo "$file"
+    #echo "${file%/*}"
+    file="${file#./}"
+    #echo "$file"
+    #echo "${file%/*}"
+    file="${file%.*}"
+    #echo "$file"
+    #echo "${file%/*}"
+    file="${file//\// }"
+    #echo "$file"
+    #echo "${file%/*}"
+    echo "* [$file]($file)" >> docs/index.md
+done
+
