@@ -1,7 +1,7 @@
 # Wiki Index
 IMF/22 USC Chapter 7 IMF subscription information
 
-- [ IMF/22 USC Chapter 7 IMF subscription information  ](  IMF/22%20USC%20Chapter%20%20IMF%20subscription%20information.md )
+- [ IMF/22 USC Chapter 7 IMF subscription information  ]( https://github.com/jnorthrup/CornellLaw/blob/main/docs/IMF/22%20USC%20Chapter%207%20IMF%20subscription%20information.md )
 - [index](index.md)
 README.MD
 - [UCC/1/UCC1](UCC/1/UCC1.md)
