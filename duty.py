@@ -3,7 +3,7 @@ import sys
 
 ## 1863 stamp duty on instruments
 # conveyance duty
-def conveyance_duty(value: float) -> float:
+def conveyance_duty(property_value: float) -> float:
     """
     Calculate the stamp duty for conveyances based on the value.
 
@@ -13,21 +13,26 @@ def conveyance_duty(value: float) -> float:
     Returns:
     - float: The stamp duty based on the conveyance scale.
     """
-    if value <= 100:
-        return 0
-    if value <= 500:
-        return 0.50
-    if value <= 1000:
-        return 1.00
-    if value <= 2500:
-        return (value - 1000) * 0.001 + 1.00  # 0.1% of the excess over 1000 plus 1
-    if value <= 10000:
-        return (value - 2500) * 0.002 + 2.50  # 0.2% of the excess over 2500 plus 2.5
-    if value <= 20000:
-        return (value - 10000) * 0.001 + 17.50  # 0.1% of the excess over 10000 plus 17.5
-    # For every additional ten thousand dollars, or fractional part thereof
-    return 20 + ((value - 20000) // 10000 + 1) * 20
+    if property_value <= 100:
+        raise ValueError("Property value must be greater than 100 dollars.")
+    elif property_value <= 500:
+        fee = 0.50
+    elif property_value <= 1000:
+        fee = 1.00
+    elif property_value <= 2500:
+        fee = 2.00
+    elif property_value <= 5000:
+        fee = 5.00
+    elif property_value <= 10000:
+        fee = 10.00
+    elif property_value <= 20000:
+        fee = 20.00
+    else:
+        fee = 20.00 + 20.00 * ((property_value - 20000) // 10000)
+        if (property_value - 20000) % 10000 > 0:
+            fee += 20.00  # Adding fee for the fractional part exceeding 10,000 increments
 
+    return fee
 
 # # Example
 # property_value = float(input("Enter the value of the property: "))
@@ -124,19 +129,19 @@ if __name__ == "__main__":
     denom = sorted([1, 5, 10, 50, 66, 100, 500, 1000, 2875], reverse=True)
 
 
-    def coin_sorter(value, denom):
+    def coin_sorter(v, denom):
         result = {}
         for i in denom:
-            if value >= i:
-                result[i] = value // i
-                value = value % i
+            if v >= i:
+                result[i] = v // i
+                v = v % i
         return result
 
     # print the result of the coin sorter in a more readable format, as USD from cent units
-    def print_coin_sorter(value, denom):
-        result = coin_sorter(value, denom)
+    def print_coin_sorter(v, denom):
+        result = coin_sorter(v, denom)
         for i in result:
-            print(f"{i / 100:6.2f} x {result[i]:4f} = {i / 100 * result[i]:6.2f}")
+            print(f"{i / 100:6.2f} x {result[i] } = {i / 100 * result[i]:6.2f}")
         print(f"Total: {sum([i / 100 * result[i] for i in result]):6.2f}")
         return result
 
