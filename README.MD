@@ -12,5 +12,3 @@ so you need to set that in your environment variables.
 
 python sift.py input.rtf |tee output.md
 
-# no warranty express or implied, nor even where LICENSE file specifies otherwise, nuh-uh, 
-# there is still no contract here 
