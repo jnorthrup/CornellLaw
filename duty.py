@@ -126,7 +126,7 @@ if __name__ == "__main__":
     # for each denom below, perform a coin sorter result to present the minimum stamps of exact change
     # displayed each as dollars amount and number of stamps
 
-    denom = sorted([1, 5, 10, 50, 66, 100, 500, 1000, 2875], reverse=True)
+    denom = sorted([1, 5, 10, 50,   100, 500, 1000, 2875], reverse=True)
 
 
     def coin_sorter(v, denom):
@@ -145,6 +145,6 @@ if __name__ == "__main__":
         print(f"Total: {sum([i / 100 * result[i] for i in result]):6.2f}")
         return result
 
-    print(f"The stamp duty for a bill of exchange valued at ${value:.2f} is ${duty:.2f}.")
+    print(f"The stamp duty for a bill valued at ${value:.2f} is ${duty:.2f}.")
     print_coin_sorter(duty * 100, denom)
 
